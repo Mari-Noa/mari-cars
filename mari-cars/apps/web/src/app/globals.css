@@ -1,0 +1,81 @@
+@import 'tailwindcss';
+
+@theme inline {
+  --font-sans: var(--font-heebo), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Design tokens: dark "garage" surfaces, warm paper for light sections, one ember accent. */
+@theme {
+  --color-ink: #0a0a0b;
+  --color-carbon: #121215;
+  --color-panel: #1a1a1f;
+  --color-line: #2b2b32;
+  --color-paper: #f4f2ed;
+  --color-bone: #e5e1d8;
+  --color-mist: #9a9aa4;
+  --color-ember: #ff5a1f;
+  --color-ember-dark: #d94710;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Motorsport hint: thin diagonal speed lines, used sparingly behind the hero. */
+.speed-lines {
+  background-image: repeating-linear-gradient(
+    -20deg,
+    transparent 0 22px,
+    rgb(255 255 255 / 0.04) 22px 23px
+  );
+}
+
+/* Angled corner cut, a nod to race livery. */
+.cut {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes drive-in {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rise {
+  animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.drive-in {
+  animation: drive-in 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.15s both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .rise,
+  .drive-in {
+    animation: none;
+  }
+}

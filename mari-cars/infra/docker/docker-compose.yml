@@ -1,0 +1,19 @@
+# Local development services. App code runs on the host with `pnpm dev`.
+services:
+  mongo:
+    image: mongo:7
+    # Replica set is required for transactions (rental double-booking guard).
+    command: ['--replSet', 'rs0', '--bind_ip_all']
+    ports: ['27017:27017']
+    volumes: [mongo-data:/data/db]
+    healthcheck:
+      test: >
+        mongosh --quiet --eval "try { rs.status().ok } catch (e) { rs.initiate({_id:'rs0',members:[{_id:0,host:'localhost:27017'}]}).ok }"
+      interval: 5s
+      timeout: 10s
+      retries: 20
+  mailpit:
+    image: axllent/mailpit
+    ports: ['1025:1025', '8025:8025']
+volumes:
+  mongo-data:
